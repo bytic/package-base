@@ -1,0 +1,33 @@
+{
+  "name": "bytic/package-base",
+  "type": "library",
+  "license": "MIT",
+  "description": "package-base for bytic library",
+  "keywords": [  ],
+  "homepage": "https://github.com/bytic/package-base",
+  "authors": [
+    {
+      "name": "Gabriel Solomon",
+      "email": "hello@gabrielsolomon.ro"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ByTIC\\PackageBase\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ByTIC\\PackageBase\\Tests\\": "tests/src",
+      "ByTIC\\PackageBase\\Tests\\Fixtures\\": "tests/fixtures"
+    }
+  },
+  "require": {
+    "bytic/container": "^1.0|^2.0"
+  },
+  "require-dev": {
+    "bytic/orm": "^0.9|^1.0",
+    "bytic/phpqatools": "^1.0",
+    "mockery/mockery": "^1.1"
+  }
+}
