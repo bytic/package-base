@@ -8,8 +8,12 @@ use Nip\Records\Locator\ModelLocator;
  * Class ModelFinder
  * @package ByTIC\PackageBase\Utility
  */
-class ModelFinder
+abstract class ModelFinder
 {
+    /**
+     * @var null|PackageConfig
+     */
+    protected static $config = null;
     protected static $models = [];
 
     /**
@@ -34,15 +38,23 @@ class ModelFinder
      */
     protected static function getConfigVar($type, $default = null)
     {
-        if (!function_exists('config')) {
-            return $default;
-        }
-        $varName = 'notifier-builder.models.' . $type;
-        $config = config();
-        if ($config->has($varName)) {
-            return $config->get($varName);
-        }
-        return $default;
+        return self::autoInitConfig()->get($type, $default);
     }
 
+    protected static function autoInitConfig(): ?PackageConfig
+    {
+        if (static::$config !== null) {
+            return static::$config;
+        }
+        $class = __NAMESPACE__ . '\\PackageConfig';
+        if (class_exists($class)) {
+            static::$config = new $class();
+            return static::$config;
+        }
+        static::$config = new PackageConfig();
+        static::$config->setName(self::packageName());
+        return static::$config;
+    }
+
+    abstract protected static function packageName();
 }
