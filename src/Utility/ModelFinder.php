@@ -3,6 +3,7 @@
 namespace ByTIC\PackageBase\Utility;
 
 use Nip\Records\Locator\ModelLocator;
+use ReflectionClass;
 
 /**
  * Class ModelFinder
@@ -46,13 +47,18 @@ abstract class ModelFinder
         if (static::$config !== null) {
             return static::$config;
         }
-        $class = __NAMESPACE__ . '\\PackageConfig';
+
+        $currentClass = static::class;
+        $refl = new ReflectionClass($currentClass);
+        $namespace = $refl->getNamespaceName();
+
+        $class = $namespace . '\\PackageConfig';
         if (class_exists($class)) {
             static::$config = new $class();
             return static::$config;
         }
         static::$config = new PackageConfig();
-        static::$config->setName(self::packageName());
+        static::$config->setName(static::packageName());
         return static::$config;
     }
 
