@@ -25,7 +25,7 @@ abstract class ModelFinder
     protected static function getModels($type, $default)
     {
         if (!isset(static::$models[$type])) {
-            $repository = static::getConfigVar($type, $default);
+            $repository = static::getConfigVar('models.' . $type, $default);
             return static::$models[$type] = ModelLocator::get($repository);
         }
 
