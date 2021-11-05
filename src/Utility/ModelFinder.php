@@ -56,5 +56,5 @@ abstract class ModelFinder
         return static::$config;
     }
 
-    abstract protected static function packageName();
+    abstract protected static function packageName(): string;
 }
