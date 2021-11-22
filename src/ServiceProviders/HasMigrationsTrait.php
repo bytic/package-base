@@ -14,6 +14,9 @@ trait HasMigrationsTrait
     protected function loadMigrationsFrom($paths)
     {
         foreach ((array)$paths as $path) {
+            if (empty($path)) {
+                continue;
+            }
             $this->getContainer()->get('migrations.migrator')->path($path);
         }
     }
@@ -21,7 +24,8 @@ trait HasMigrationsTrait
     protected function bootMigrations()
     {
         if (method_exists($this, 'migrations')) {
-            $this->loadMigrationsFrom($this->migrations());
+            $migrations = $this->migrations();
+            $this->loadMigrationsFrom($migrations);
             return;
         }
     }
