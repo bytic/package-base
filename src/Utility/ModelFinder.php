@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\Utility;
 
+use Nip\Records\AbstractModels\RecordManager;
 use Nip\Records\Locator\ModelLocator;
 use ReflectionClass;
 
@@ -14,19 +17,22 @@ abstract class ModelFinder
     /**
      * @var null|PackageConfig
      */
-    protected static $config = null;
-    protected static $models = [];
+    protected static ?PackageConfig $config = null;
+
+    protected static array $models = [];
 
     /**
      * @param string $type
      * @param string $default
-     * @return mixed|\Nip\Records\AbstractModels\RecordManager
+     * @return mixed|RecordManager
      */
-    protected static function getModels($type, $default)
+    protected static function getModels(string $type, string $default)
     {
         if (!isset(static::$models[$type])) {
-            $repository = static::getConfigVar('models.' . $type, $default);
-            return static::$models[$type] = ModelLocator::get($repository);
+            $repository_class = static::getConfigVar('models.' . $type, $default);
+            $repository = ModelLocator::get($repository_class);
+            ModelLocator::set($repository->getController(), $repository);
+            return static::$models[$type] = $repository;
         }
 
         return static::$models[$type];
@@ -34,23 +40,27 @@ abstract class ModelFinder
 
     /**
      * @param string $type
-     * @param null|string $default
+     * @param string|null $default
      * @return string
+     * @throws \Exception
      */
-    protected static function getConfigVar($type, $default = null)
+    protected static function getConfigVar(string $type, string $default = null): string
     {
         return self::autoInitConfig()->get($type, $default);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     protected static function autoInitConfig(): ?PackageConfig
     {
         if (static::$config !== null) {
             return static::$config;
         }
 
-        $currentClass = static::class;
-        $refl = new ReflectionClass($currentClass);
-        $namespace = $refl->getNamespaceName();
+        $current_class = static::class;
+        $reflection = new ReflectionClass($current_class);
+        $namespace = $reflection->getNamespaceName();
 
         $class = $namespace . '\\PackageConfig';
         if (class_exists($class)) {
