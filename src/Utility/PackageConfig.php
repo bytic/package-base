@@ -47,6 +47,9 @@ class PackageConfig
         }
 
         $varName = $this->name . '.' . $type;
+        if (app()->has('config') === false) {
+            return $default;
+        }
         $config = config();
         if ($config->has($varName) === false) {
             return $default;
