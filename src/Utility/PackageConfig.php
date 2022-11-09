@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\Utility;
 
 use Nip\Utility\Traits\SingletonTrait;
@@ -25,9 +27,9 @@ class PackageConfig
         return static::instance()->get($type, $default);
     }
 
-    public static function name(string $type, $default = null)
+    public static function name(string $type)
     {
-        return static::instance()->setName($name);
+        return static::instance()->setName($type);
     }
 
     /**
