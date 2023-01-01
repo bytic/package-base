@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase;
 
 use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
@@ -12,6 +14,7 @@ use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
 abstract class BaseBootableServiceProvider extends AbstractSignatureServiceProvider implements BootableServiceProviderInterface
 {
     use ServiceProviders\HasMigrationsTrait;
+    use ServiceProviders\HasRepositoriesTrait;
 
     /**
      * @inheritdoc

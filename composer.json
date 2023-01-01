@@ -29,5 +29,15 @@
     "bytic/orm": "^0.9|^1.0",
     "bytic/phpqatools": "^1.0",
     "mockery/mockery": "^1.1"
+  },
+  "prefer-stable": true,
+    "minimum-stability": "dev",
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "ergebnis/composer-normalize": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "bytic/phpqatools": true
+    }
   }
 }
