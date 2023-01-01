@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\Utility;
 
 use Closure;
 use Nip\Container\Utility\Container;
 use Psr\Container\ContainerInterface;
-use RuntimeException;
 
 /**
- * Class AbstractFacade
- * @package ByTIC\PackageBase\Utility
+ * Class AbstractFacade.
  */
 abstract class AbstractFacade
 {
-
     protected static $container;
 
     /**
@@ -22,7 +21,6 @@ abstract class AbstractFacade
      * @var array
      */
     protected static $resolvedInstance;
-
 
     /**
      * Indicates if the resolved instance should be cached.
@@ -47,6 +45,7 @@ abstract class AbstractFacade
      * Resolve the facade root instance from the container.
      *
      * @param string $name
+     *
      * @return mixed
      */
     protected static function resolveFacadeInstance($name)
@@ -55,25 +54,22 @@ abstract class AbstractFacade
             return static::$resolvedInstance[$name];
         }
 
-        if (isset(static::$resolvedInstance[$name])) {
-            return static::$resolvedInstance[$name];
-        }
         $container = static::getContainer();
         static::$resolvedInstance[$name] = $container->get($name);
+
         return static::$resolvedInstance[$name];
     }
 
     /**
      * Run a Closure when the facade has been resolved.
      *
-     * @param \Closure $callback
      * @return void
      */
-    public static function resolved(Closure $callback)
+    public static function resolved(\Closure $callback)
     {
         $accessor = static::getFacadeAccessor();
 
-        if (static::$app->resolved($accessor) === true) {
+        if (true === static::$app->resolved($accessor)) {
             $callback(static::getFacadeRoot());
         }
 
@@ -95,18 +91,18 @@ abstract class AbstractFacade
      */
     public static function getContainer()
     {
-        if (self::$container === null) {
+        if (null === self::$container) {
             self::$container = Container::container();
         }
+
         return self::$container;
     }
-
 
     /**
      * Handle dynamic calls to the service.
      *
      * @param string $method
-     * @param $args
+     *
      * @return mixed
      */
     public static function __callStatic($method, $args)
@@ -114,7 +110,7 @@ abstract class AbstractFacade
         $instance = static::getFacadeRoot();
 
         if (!$instance) {
-            throw new RuntimeException('A facade root has not been set.');
+            throw new \RuntimeException('A facade root has not been set.');
         }
 
         return $instance->$method(...$args);

@@ -1,16 +1,26 @@
 {
   "name": "bytic/package-base",
-  "type": "library",
-  "license": "MIT",
   "description": "package-base for bytic library",
-  "keywords": [  ],
-  "homepage": "https://github.com/bytic/package-base",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [],
   "authors": [
     {
       "name": "Gabriel Solomon",
       "email": "hello@gabrielsolomon.ro"
     }
   ],
+  "homepage": "https://github.com/bytic/package-base",
+  "require": {
+    "bytic/container": "^1.0 || ^2.0"
+  },
+  "require-dev": {
+    "bytic/orm": "^0.9 || ^1.0",
+    "bytic/phpqatools": "^1.0",
+    "mockery/mockery": "^1.1"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "ByTIC\\PackageBase\\": "src/"
@@ -22,16 +32,6 @@
       "ByTIC\\PackageBase\\Tests\\Fixtures\\": "tests/fixtures"
     }
   },
-  "require": {
-    "bytic/container": "^1.0|^2.0"
-  },
-  "require-dev": {
-    "bytic/orm": "^0.9|^1.0",
-    "bytic/phpqatools": "^1.0",
-    "mockery/mockery": "^1.1"
-  },
-  "prefer-stable": true,
-    "minimum-stability": "dev",
   "config": {
     "allow-plugins": {
       "phpstan/extension-installer": true,

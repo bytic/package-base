@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\Tests\Fixtures\Utility;
 
 use ByTIC\PackageBase\Utility\AbstractFacade;
 
 /**
- * Class BaseFacade
- * @package ByTIC\PackageBase\Tests\Fixtures\Utility
+ * Class BaseFacade.
  */
 class BaseFacade extends AbstractFacade
 {
-
     protected static function getFacadeAccessor()
     {
         return 'test';

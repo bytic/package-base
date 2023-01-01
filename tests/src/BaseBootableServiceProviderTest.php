@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\Tests;
 
 use ByTIC\PackageBase\Tests\Fixtures\BasicBootableServiceProvider;
 
 /**
- * Class BaseBootableServiceProviderTest
- * @package ByTIC\PackageBase\Tests
+ * Class BaseBootableServiceProviderTest.
  */
 class BaseBootableServiceProviderTest extends AbstractTest
 {
-    public function test_bootMigrations()
+    public function testBootMigrations()
     {
         $provider = new BasicBootableServiceProvider();
         $provider->initContainer();

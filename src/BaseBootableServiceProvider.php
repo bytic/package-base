@@ -8,8 +8,7 @@ use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
 
 /**
- * Class BaseBootableServiceProvider
- * @package ByTIC\PackageBase
+ * Class BaseBootableServiceProvider.
  */
 abstract class BaseBootableServiceProvider extends AbstractSignatureServiceProvider implements BootableServiceProviderInterface
 {
@@ -17,14 +16,14 @@ abstract class BaseBootableServiceProvider extends AbstractSignatureServiceProvi
     use ServiceProviders\HasRepositoriesTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function register()
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function provides()
     {

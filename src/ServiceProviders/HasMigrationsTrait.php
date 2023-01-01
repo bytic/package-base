@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByTIC\PackageBase\ServiceProviders;
 
 /**
- * Trait HasMigrationsTrait
- * @package ByTIC\PackageBase\ServiceProviders
+ * Trait HasMigrationsTrait.
  */
 trait HasMigrationsTrait
 {
@@ -13,7 +14,7 @@ trait HasMigrationsTrait
      */
     protected function loadMigrationsFrom($paths)
     {
-        foreach ((array)$paths as $path) {
+        foreach ((array) $paths as $path) {
             if (empty($path)) {
                 continue;
             }
@@ -26,6 +27,7 @@ trait HasMigrationsTrait
         if (method_exists($this, 'migrations')) {
             $migrations = $this->migrations();
             $this->loadMigrationsFrom($migrations);
+
             return;
         }
     }
