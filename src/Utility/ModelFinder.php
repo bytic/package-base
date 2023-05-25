@@ -33,7 +33,13 @@ abstract class ModelFinder
         return static::$models[$type];
     }
 
-    protected function getTable(string $type, ?string $default = null)
+    /**
+     * @param string $type
+     * @param string|null $default
+     * @return mixed|string
+     * @throws \Exception
+     */
+    protected static function getTable(string $type, ?string $default = null): string
     {
         if (!isset(static::$tables[$type])) {
             $default = $default ?: self::getModels($type, $type)->getTable();
