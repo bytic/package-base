@@ -15,6 +15,7 @@ abstract class ModelFinder
     protected static ?PackageConfig $config = null;
 
     protected static array $models = [];
+    protected static array $tables = [];
 
     /**
      * @return mixed|RecordManager
@@ -30,6 +31,18 @@ abstract class ModelFinder
         }
 
         return static::$models[$type];
+    }
+
+    protected function getTable(string $type, ?string $default = null)
+    {
+        if (!isset(static::$tables[$type])) {
+            $default = $default ?: self::getModels($type, $type)->getTable();
+            $table = static::getConfigVar('tables.' . $type, $default);
+
+            return static::$tables[$type] = $table;
+        }
+
+        return static::$tables[$type];
     }
 
     /**
