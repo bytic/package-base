@@ -22,15 +22,16 @@ abstract class ModelFinder
      */
     protected static function getModels(string $type, string $default)
     {
-        if (!isset(static::$models[$type])) {
+        $key = static::keyCreate($type);
+        if (!isset(static::$models[$key])) {
             $repository_class = static::getConfigVar('models.' . $type, $default);
             $repository = ModelLocator::get($repository_class);
             ModelLocator::set($repository->getController(), $repository);
 
-            return static::$models[$type] = $repository;
+            return static::$models[$key] = $repository;
         }
 
-        return static::$models[$type];
+        return static::$models[$key];
     }
 
     /**
@@ -41,14 +42,21 @@ abstract class ModelFinder
      */
     protected static function getTable(string $type, ?string $default = null): string
     {
-        if (!isset(static::$tables[$type])) {
+        $key = static::keyCreate($type);
+        if (!isset(static::$tables[$key])) {
             $default = $default ?: self::getModels($type, $type)->getTable();
             $table = static::getConfigVar('tables.' . $type, $default);
 
-            return static::$tables[$type] = $table;
+            return static::$tables[$key] = $table;
         }
 
-        return static::$tables[$type];
+        return static::$tables[$key];
+    }
+
+    protected static function keyCreate($key): string
+    {
+        $current_class = static::class;
+        return $current_class . '::' . $key;
     }
 
     /**
