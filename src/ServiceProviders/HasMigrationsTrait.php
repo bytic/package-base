@@ -14,7 +14,7 @@ trait HasMigrationsTrait
      */
     protected function loadMigrationsFrom($paths)
     {
-        foreach ((array) $paths as $path) {
+        foreach ((array)$paths as $path) {
             if (empty($path)) {
                 continue;
             }
@@ -24,11 +24,10 @@ trait HasMigrationsTrait
 
     protected function bootMigrations()
     {
-        if (method_exists($this, 'migrations')) {
-            $migrations = $this->migrations();
-            $this->loadMigrationsFrom($migrations);
-
+        if (!method_exists($this, 'migrations')) {
             return;
         }
+        $migrations = $this->migrations();
+        $this->loadMigrationsFrom($migrations);
     }
 }

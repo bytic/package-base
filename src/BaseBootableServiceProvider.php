@@ -14,6 +14,7 @@ abstract class BaseBootableServiceProvider extends AbstractSignatureServiceProvi
 {
     use ServiceProviders\HasMigrationsTrait;
     use ServiceProviders\HasRepositoriesTrait;
+    use ServiceProviders\HasTranslationsTrait;
 
     /**
      * {@inheritdoc}
@@ -30,8 +31,9 @@ abstract class BaseBootableServiceProvider extends AbstractSignatureServiceProvi
         return [];
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->bootMigrations();
+        $this->bootTranslations();
     }
 }
