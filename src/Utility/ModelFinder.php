@@ -15,6 +15,8 @@ abstract class ModelFinder
     protected static ?PackageConfig $config = null;
 
     protected static array $models = [];
+
+    protected static array $modelsClass = [];
     protected static array $tables = [];
 
     /**
@@ -24,11 +26,22 @@ abstract class ModelFinder
     {
         $key = static::keyCreate($type);
         if (!isset(static::$models[$key])) {
-            $repository_class = static::getConfigVar('models.' . $type, $default);
+            $repository_class = static::getModelsClass($type, $default);
             $repository = ModelLocator::get($repository_class);
             ModelLocator::set($repository->getController(), $repository);
 
             return static::$models[$key] = $repository;
+        }
+
+        return static::$models[$key];
+    }
+
+    protected static function getModelsClass(string $type, string $default): string
+    {
+        $key = static::keyCreate($type);
+        if (!isset(static::$modelsClass[$key])) {
+            $repository_class = static::getConfigVar('models.' . $type, $default);
+            return static::$modelsClass[$key] = $repository_class;
         }
 
         return static::$models[$key];
