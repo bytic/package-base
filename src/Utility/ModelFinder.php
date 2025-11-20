@@ -44,7 +44,7 @@ abstract class ModelFinder
             return static::$modelsClass[$key] = $repository_class;
         }
 
-        return static::$models[$key];
+        return static::$modelsClass[$key];
     }
 
     /**
