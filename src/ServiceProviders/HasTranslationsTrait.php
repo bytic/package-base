@@ -32,13 +32,13 @@ trait HasTranslationsTrait
     /**
      * @param string|array $path
      */
-    protected function loadTraslationsFrom(array|string $path): void
+    protected function loadTraslationsFrom(array|string $basePath): void
     {
         $languages = $this->getContainer()->get('translation.languages');
         $translator = $this->getContainer()->get('translator');
 
         foreach ($languages as $language) {
-            $path = $path . DIRECTORY_SEPARATOR . $language;
+            $path = $basePath . DIRECTORY_SEPARATOR . $language;
             if (is_dir($path)) {
                 $translator->prependResource('php', $path, $language);
             }
