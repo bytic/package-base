@@ -12,7 +12,7 @@ use Nip\Records\Locator\ModelLocator;
  */
 abstract class ModelFinder
 {
-    protected static ?PackageConfig $config = null;
+    protected static array $config = [];
 
     protected static array $models = [];
 
@@ -85,8 +85,9 @@ abstract class ModelFinder
      */
     protected static function autoInitConfig(): ?PackageConfig
     {
-        if (null !== static::$config) {
-            return static::$config;
+        $current_class = static::class;
+        if (isset(self::$config[$current_class])) {
+            return self::$config[$current_class];
         }
 
         $current_class = static::class;
@@ -95,14 +96,14 @@ abstract class ModelFinder
 
         $class = $namespace . '\\PackageConfig';
         if (class_exists($class)) {
-            static::$config = new $class();
+            self::$config[$current_class] = new $class();
 
-            return static::$config;
+            return self::$config[$current_class];
         }
-        static::$config = new PackageConfig();
-        static::$config->setName(static::packageName());
+        self::$config[$current_class] = new PackageConfig();
+        self::$config[$current_class]->setName(static::packageName());
 
-        return static::$config;
+        return self::$config[$current_class];
     }
 
     abstract protected static function packageName(): string;
